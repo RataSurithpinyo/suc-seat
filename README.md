@@ -1,4 +1,4 @@
-# This Reporitory is a part of 2110521 Software Architecture (2023/1)
+# This Repository is a part of 2110521 Software Architecture (2023/1)
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
