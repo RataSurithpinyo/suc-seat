@@ -1,5 +1,8 @@
 import Link from "next/link";
 
+// ที่คิดไว้ตอนนี้คือจะทำแยกเป็น 2 หน้าเลยดีไหม หน้านึงสำหรับ update จำนวนธรรมดาเลย อีกหน้าก็ update
+// information ทั่วไป
+
 export default function Signup() {
   return (
     <>
