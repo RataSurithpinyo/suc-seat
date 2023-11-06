@@ -1,6 +1,5 @@
 export default function Place() {
   let isAdmin = true
-  let isPlaceExisted = false
   let isReservable = true
   return (
     <>
@@ -12,46 +11,6 @@ export default function Place() {
             </h2>
           </div>
 
-          {/* <div className="mt-4 sm:mx-auto sm:w-full sm:max-w-sm">
-            <form className="space-y-6" action="#" method="POST">
-              <div>
-                <label
-                  htmlFor="capacity"
-                  className="block text-sm font-medium leading-6 text-white"
-                >
-                  Capacity (Seats)
-                </label>
-                <div className="mt-2">
-                  <input
-                  min={0}
-                    type="number"
-                    id="capacity"
-                    name="capacity"
-                    placeholder="Enter a number"
-                    className="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <button
-                  type="submit"
-                  className="flex w-full justify-center rounded-md bg-amber-200 px-3 py-1.5 text-sm font-semibold leading-6 text-black shadow-sm hover:bg-amber-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                >
-                  Update available seats
-                </button>
-              </div>
-              </form>
-              </div>
-
-
-
-          <div className="relative flex py-5 items-center">
-    <div className="flex-grow border-t border-gray-400"></div>
-    <span className="flex-shrink mx-4 text-gray-400">Place information</span>
-    <div className="flex-grow border-t border-gray-400"></div>
-    </div> */}
-
           <div className="mt-4 sm:mx-auto sm:w-full sm:max-w-sm">
             <form className="space-y-6" action="#" method="POST">
               <div>
@@ -59,7 +18,7 @@ export default function Place() {
                   htmlFor="name"
                   className="block text-sm font-medium leading-6 text-white"
                 >
-                  Name
+                  Place's Name
                 </label>
                 <div className="mt-2">
                   <input
@@ -160,25 +119,14 @@ export default function Place() {
                 </div>
               </div>
 
-              {isPlaceExisted ? (
-                <div>
-                <button
-                  type="submit"
-                  className="flex w-full justify-center rounded-md bg-amber-200 px-3 py-1.5 text-sm font-semibold leading-6 text-black shadow-sm hover:bg-amber-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                >
-                  Update Information
-                </button>
-              </div>
-              ) : 
               <div>
                 <button
                   type="submit"
                   className="flex w-full justify-center rounded-md bg-amber-200 px-3 py-1.5 text-sm font-semibold leading-6 text-black shadow-sm hover:bg-amber-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
-                  Create Place
+                  Update Place Information
                 </button>
               </div>
-              }
             </form>
           </div>
         </div>

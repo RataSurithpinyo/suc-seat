@@ -1,9 +1,11 @@
-import Link from "next/link";
+'use client'
+import { useRouter } from 'next/navigation'
 
 // ที่คิดไว้ตอนนี้คือจะทำแยกเป็น 2 หน้าเลยดีไหม หน้านึงสำหรับ update จำนวนธรรมดาเลย อีกหน้าก็ update
 // information ทั่วไป
 
 export default function Signup() {
+  const router = useRouter()
   return (
     <>
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -99,6 +101,7 @@ export default function Signup() {
             <button
               type="submit"
               className="flex w-full justify-center rounded-md bg-amber-200 px-3 py-1.5 text-sm font-semibold leading-6 text-black shadow-sm hover:bg-amber-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              onClick={() => router.push('/role')}
             >
               Sign up
             </button>
