@@ -67,6 +67,7 @@ export default function Login() {
             Sign up
           </Link>
         </p>
+        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" ><Link href="/home">home</Link></button>
       </div>
     </div>
   </>

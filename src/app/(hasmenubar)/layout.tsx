@@ -7,8 +7,9 @@ export default function MenubarLayout({
 }) {
   return (
     <div>
-        <nav className="flex items-center justify-between flex-wrap bg-gray-950 bg-opacity-75 p-4">
-  <div className="flex items-center flex-shrink-0 text-white mr-6">
+        <nav className="flex items-center justify-between bg-gray-950 bg-opacity-75 p-4">
+    <Link href={"./home"}>
+  <div className="flex items-center text-white mr-6 w-64">
     <svg
       xmlns="http://www.w3.org/2000/svg"
       xmlSpace="preserve"
@@ -67,14 +68,14 @@ export default function MenubarLayout({
       <path style={{ fill: "none" }} d="M0 0h6.827v6.827H0z" />
     </svg>
     <span className="font-extrabold text-4xl tracking-tight">SUC SEAT</span>
-  </div>
-  <div className="block lg:hidden">
+  </div></Link>
+  {/* <div className="block lg:hidden">
     <button className="flex items-center px-3 py-2 border rounded text-teal-200 border-teal-400 hover:text-white hover:border-white">
       <svg className="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/></svg>
     </button>
-  </div>
-  <div className="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
-    <div className="text-sm lg:flex-grow">
+  </div> */}
+  <div className="w-full flex-grow flex items-center">
+    <div className="text-sm flex-grow">
       {/* <a href="#responsive-header" className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
         Docs
       </a>
@@ -86,7 +87,7 @@ export default function MenubarLayout({
       </a> */}
     </div>
     <div>
-      <Link href={"./Profile"} className="inline-block text-lg px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0">Profile</Link>
+      <Link href={"./profile"} className="inline-block text-lg px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-0">Profile</Link>
     </div>
   </div>
 </nav>
