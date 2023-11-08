@@ -1,21 +1,14 @@
-import { Client } from "@grpc/grpc-js";
-
 const grpc = require("@grpc/grpc-js");
 const protoLoader = require("@grpc/proto-loader");
-
 const PROTO_PATH = "/Users/narongdaetdata/Documents/SA_proj/suc-seat/src/libs/service.proto";
-
 var packageDefinition = protoLoader.loadSync(PROTO_PATH, {
   keepCase: true,
   longs: String,
   enums: String,
   arrays: true
 });
-
 var packageObject = grpc.loadPackageDefinition(packageDefinition);
-
 var clientService = packageObject.places.PlaceService;
-
 const client = new clientService("localhost:9000", grpc.credentials.createInsecure());
 
 

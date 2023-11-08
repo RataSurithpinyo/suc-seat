@@ -9,17 +9,25 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@grpc/grpc-js": "^1.9.9",
+    "@grpc/proto-loader": "^0.7.10",
+    "body-parser": "^1.20.2",
+    "express": "^4.18.2",
+    "grpc": "^1.24.11",
+    "hbs": "^4.2.0",
+    "next": "13.5.4",
     "react": "^18",
     "react-dom": "^18",
-    "next": "13.5.4"
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
-    "typescript": "^5",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10",
+    "grpc-tools": "^1.12.4",
     "postcss": "^8",
-    "tailwindcss": "^3"
+    "tailwindcss": "^3",
+    "typescript": "^5"
   }
 }
