@@ -11,34 +11,15 @@ var packageObject = grpc.loadPackageDefinition(packageDefinition);
 var clientService = packageObject.places.PlaceService;
 const client = new clientService("localhost:9000", grpc.credentials.createInsecure());
 
-
+// import { filterPlaces, getPlaceInfo, removePlaces, updatePlace, uploadPlaceInfo } from "@/libs/grpc-client";
 export function uploadPlaceInfo(place: { id: string ; name: string; own:string ; capacity: number; availableSeat:number; facilities:string[];}){
     console.log("Place Info to be uploaded:", place);
   
     try {
       // Make the gRPC call
       var call = client.uploadPlaceInfo(
-        { id : place.name,
-          name: place.name,
-          ownner: place.name,
-          capacity:place.capacity,
-          availableSeat:place.availableSeat,
-          facilities:place.facilities
-        }, function(err: any, response: any) {
+        place, function(err: any, response: any) {
         console.log('response:', response);
-      });
-
-      call.on('data', function (response: any) {
-        console.log("Response from the server:", response);
-        // Handle each piece of streaming data here
-      });
-  
-      call.on('end', function () {
-        console.log('Streaming response ended');
-      });
-  
-      call.on('error', function (err: any) {
-        console.error('Error:', err);
       });
 
     } catch (err) {
@@ -53,22 +34,14 @@ export function uploadPlaceInfo(place: { id: string ; name: string; own:string ;
       // Make the gRPC call
    
       var call = client.uploadPlaceInfo(
-        {targetName: UpdatePlace.targetName,
-          newInfo:{
-            id: UpdatePlace.newInfo.id,
-            name: UpdatePlace.newInfo.name,
-            owner:UpdatePlace.newInfo.owner,
-            capacity:UpdatePlace.newInfo.capacity,
-            facilities:UpdatePlace.newInfo.facilities
-          }
-        }, function(err: any, response: any) {
+        UpdatePlace, function(err: any, response: any) {
         console.log('response:', response);
       });
     } catch (err) {
       console.error('Error:', err);
     }
   }
-  export function getPlaceInfo(PlaceName: any){
+  export function getPlaceInfo(PlaceName: {name : string}){
     console.log("Place Info to be uploaded:", PlaceName);
   
     try {
@@ -79,11 +52,15 @@ export function uploadPlaceInfo(place: { id: string ; name: string; own:string ;
         console.log('response:', response);
       });
 
+      // getPlaceInfo({
+      //   name : "abc"
+      // })
+
     } catch (err) {
       console.error('Error:', err);
     }
   }
-  export function searchPlaces(PlaceName: any){
+  export function searchPlaces(PlaceName: {name : string}){
     console.log("Place Info to be uploaded:", PlaceName);
   
     try {
@@ -97,7 +74,7 @@ export function uploadPlaceInfo(place: { id: string ; name: string; own:string ;
       console.error('Error:', err);
     }
   }
-  export function filterPlaces(Filter: any){
+  export function filterPlaces(Filter: {minCapacity? : number; facilities:string[]}){
     console.log("Place Info to be uploaded:", Filter);
     try {
       var call = client.filterPlaces(
@@ -109,7 +86,7 @@ export function uploadPlaceInfo(place: { id: string ; name: string; own:string ;
       console.error('Error:', err);
     }
   }
-  export function removePlaces(PlaceName:any){
+  export function removePlaces(PlaceName:{name : string}){
     console.log("Place Info to be uploaded:", PlaceName);
   
     try {
@@ -118,7 +95,20 @@ export function uploadPlaceInfo(place: { id: string ; name: string; own:string ;
       var call = client.removePlaces(
         PlaceName, function(err: any, response: any) {
         console.log('response:', response);
+        //fill to make an action
       });
+
+      //how to called
+
+      // filterPlaces({
+      //   facilities : ["toilet"]
+      // })
+
+      // filterPlaces({
+      //   minCapacity:1,
+      //   facilities : ["toilet"]
+      // })
+
     } catch (err) {
       console.error('Error:', err);
     }
