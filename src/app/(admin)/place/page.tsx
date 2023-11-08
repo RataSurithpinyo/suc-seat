@@ -1,56 +1,15 @@
 export default function Place() {
   let isAdmin = true
-  let isPlaceExisted = false
   let isReservable = true
   return (
     <>
       {isAdmin ? (
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-          <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+          <div className="sm:mx-auto sm:w-full sm:max-w-lg">
             <h2 className="mt-6 text-center text-3xl font-bold leading-9 tracking-tight text-white">
-              Manage your own place
+              Update your place information
             </h2>
           </div>
-
-          {/* <div className="mt-4 sm:mx-auto sm:w-full sm:max-w-sm">
-            <form className="space-y-6" action="#" method="POST">
-              <div>
-                <label
-                  htmlFor="capacity"
-                  className="block text-sm font-medium leading-6 text-white"
-                >
-                  Capacity (Seats)
-                </label>
-                <div className="mt-2">
-                  <input
-                  min={0}
-                    type="number"
-                    id="capacity"
-                    name="capacity"
-                    placeholder="Enter a number"
-                    className="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <button
-                  type="submit"
-                  className="flex w-full justify-center rounded-md bg-amber-200 px-3 py-1.5 text-sm font-semibold leading-6 text-black shadow-sm hover:bg-amber-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                >
-                  Update available seats
-                </button>
-              </div>
-              </form>
-              </div>
-
-
-
-          <div className="relative flex py-5 items-center">
-    <div className="flex-grow border-t border-gray-400"></div>
-    <span className="flex-shrink mx-4 text-gray-400">Place information</span>
-    <div className="flex-grow border-t border-gray-400"></div>
-    </div> */}
 
           <div className="mt-4 sm:mx-auto sm:w-full sm:max-w-sm">
             <form className="space-y-6" action="#" method="POST">
@@ -59,7 +18,7 @@ export default function Place() {
                   htmlFor="name"
                   className="block text-sm font-medium leading-6 text-white"
                 >
-                  Name
+                  Place's Name
                 </label>
                 <div className="mt-2">
                   <input
@@ -130,17 +89,39 @@ export default function Place() {
                 </div>
               </div>
 
+              <div>
+                <label
+                  htmlFor="available"
+                  className="block text-sm font-medium leading-6 text-white"
+                >
+                  Current Available Seats
+                </label>
+                <div className="mt-2">
+                  <input
+                  min={0}
+                  // set max to seats capacity
+                  // max={document.getElementById("capacity").value}
+                    type="number"
+                    id="capacity"
+                    name="capacity"
+                    placeholder="Enter a number"
+                    className="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div>
+
 
               <div>
                 <label
                   htmlFor="facilities"
                   className="block text-sm font-medium leading-6 text-white"
                 >
-                  Reservable (Can users book this place in advance?)
+                  Reservable (*If you want to make change in this field, please contact our system staff)
                 </label>
                 <div className="mt-2 text-white text-sm font-medium leading-6 flex items-center">
                   <label className="flex items-center">
                     <input
+                      disabled
                       type="radio"
                       value="true"
                       name="reservable"
@@ -150,6 +131,7 @@ export default function Place() {
                   </label>
                   <label className="flex items-center ml-4">
                     <input
+                    disabled
                       type="radio"
                       value="false"
                       name="reservable"
@@ -160,25 +142,14 @@ export default function Place() {
                 </div>
               </div>
 
-              {isPlaceExisted ? (
-                <div>
-                <button
-                  type="submit"
-                  className="flex w-full justify-center rounded-md bg-amber-200 px-3 py-1.5 text-sm font-semibold leading-6 text-black shadow-sm hover:bg-amber-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                >
-                  Update Information
-                </button>
-              </div>
-              ) : 
               <div>
                 <button
                   type="submit"
                   className="flex w-full justify-center rounded-md bg-amber-200 px-3 py-1.5 text-sm font-semibold leading-6 text-black shadow-sm hover:bg-amber-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
-                  Create Place
+                  Save changes
                 </button>
               </div>
-              }
             </form>
           </div>
         </div>
