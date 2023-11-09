@@ -22,7 +22,7 @@ export default function Role() {
               Admin (Place's Owner)
             </button>
             <button className="text-lg ml-8 mt-4 block rounded-md bg-yellow-500 hover:bg-yellow-700 px-5 py-4 text-white shadow-sm"
-            onClick={() => router.push('/')} // เดี๋ยวเปลี่ยนตรงนี้เป็นหน้า home
+            onClick={() => router.push('/signup')} // เดี๋ยวเปลี่ยนตรงนี้เป็นหน้า home
             >
               User
             </button>
