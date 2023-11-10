@@ -8,7 +8,7 @@ export default function MenubarLayout({
   return (
     <div>
         <nav className="flex items-center justify-between bg-gray-950 bg-opacity-75 p-4">
-    <Link href={"./home"}>
+    <Link href={"/home"}>
   <div className="flex items-center text-white mr-6 w-64">
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -87,7 +87,7 @@ export default function MenubarLayout({
       </a> */}
     </div>
     <div>
-      <Link href={"./profile"} className="inline-block text-lg px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-0">Profile</Link>
+      <Link href={"/profile"} className="inline-block text-lg px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-0">Profile</Link>
     </div>
   </div>
 </nav>
