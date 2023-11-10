@@ -1,5 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 export default function Role() {
   const router = useRouter();
   return (
@@ -18,13 +19,15 @@ export default function Role() {
         <div className="mt-8 flex justify-center">
           <button
             className="text-lg mt-4 block rounded-md bg-indigo-500 hover:bg-indigo-700 px-5 py-4 text-white shadow-sm"
-            onClick={() => router.push("/createforadmin")}
+            onClick={() => {
+              router.push("/signup?role=OWNER")}}
           >
             Admin (Place's Owner)
           </button>
           <button
             className="text-lg ml-8 mt-4 block rounded-md bg-yellow-500 hover:bg-yellow-700 px-5 py-4 text-white shadow-sm"
-            onClick={() => router.push("/signup")}
+            onClick={() => {
+              router.push("/signup?role=USER")}}
           >
             User
           </button>

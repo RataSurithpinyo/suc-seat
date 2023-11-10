@@ -1,11 +1,63 @@
 'use client'
 import { useRouter } from 'next/navigation'
-
-// ที่คิดไว้ตอนนี้คือจะทำแยกเป็น 2 หน้าเลยดีไหม หน้านึงสำหรับ update จำนวนธรรมดาเลย อีกหน้าก็ update
-// information ทั่วไป
+import { useState } from 'react';
 
 export default function UserProfile() {
+  const getUserDetail = async () => {
+    // Proceed with the POST request only if all required fields are filled
+    const url = 'http://localhost:8080'; // Replace with your actual backend URL
+    try {
+      
+      const response = await fetch(`${url}/getuserdetail`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log(result);
+      } else {
+        console.error('Failed to sign up');
+      }
+    } catch (error) {
+      console.error(error);
+    }
+};
+
   const router = useRouter()
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [surname, setSurname] = useState("");
+  const [tel, setTel] = useState("");
+  const handleSignup = async () => {
+      // Proceed with the POST request only if all required fields are filled
+      const url = 'http://localhost:8080'; // Replace with your actual backend URL
+      try {
+        
+        const response = await fetch(`${url}/updateuserdetail`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ password, name, surname, tel }),
+        });
+
+        if (response.ok) {
+          const result = await response.json();
+          console.log(result);
+          console.log('Successfully save changes!');
+          router.push('/home');
+        } else {
+          console.error('Failed to sign up');
+          alert('Failed to sign up.');
+        }
+      } catch (error) {
+        console.error(error);
+        alert('Failed to sign up.');
+      }
+  };
   return (
     <>
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -66,14 +118,11 @@ export default function UserProfile() {
           <div>
             <label className="block text-sm font-medium leading-6 text-white">
               Username
+              <p> * Sorry, it's not possible to change your username *</p>
             </label>
             <div className="mt-2">
               <input
-                // id="email"
-                // name="email"
-                // type="email"
-                // autoComplete="email"
-                required
+                disabled
                 className="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
             </div>

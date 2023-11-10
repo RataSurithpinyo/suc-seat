@@ -1,3 +1,4 @@
+import { getPlaceInfo } from "@/libs/grpc-client";
 export default function Place() {
   let isAdmin = true
   let isReservable = true

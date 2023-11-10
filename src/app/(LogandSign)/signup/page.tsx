@@ -1,8 +1,49 @@
 "use client";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
 
 export default function Signup() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const role = searchParams.get("role");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [surname, setSurname] = useState("");
+  const [tel, setTel] = useState("");
+  // console.log("Role:", role)
+  const handleSignup = async () => {
+    if (name && surname && tel && username && password) {
+      // Proceed with the POST request only if all required fields are filled
+      const url = 'http://localhost:8080'; // Replace with your actual backend URL
+      try {
+        const response = await fetch(`${url}/register`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ username, password, name, surname, role, tel }),
+        });
+
+        if (response.ok) {
+          const result = await response.json();
+          console.log(result);
+          console.log('Successfully created a user!');
+          if (role === 'USER') router.push('/home');
+          else router.push('/createforadmin');
+        } else {
+          console.error('Failed to sign up');
+          alert('Failed to sign up.');
+        }
+      } catch (error) {
+        console.error(error);
+        alert('Failed to sign up.');
+      }
+    } else {
+      alert('Please fill in all required fields.');
+    }
+  };
+
   return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -24,6 +65,9 @@ export default function Signup() {
                 </label>
                 <div className="mt-2">
                   <input
+                  required
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                     type="text"
                     name="first-name"
                     id="first-name"
@@ -42,6 +86,9 @@ export default function Signup() {
                 </label>
                 <div className="mt-2">
                   <input
+                  required
+                    value={surname}
+                    onChange={(e) => setSurname(e.target.value)}
                     type="text"
                     name="last-name"
                     id="last-name"
@@ -61,11 +108,14 @@ export default function Signup() {
               </label>
               <div className="mt-2">
                 <input
+                  value={tel}
+                  onChange={(e) => setTel(e.target.value)}
                   type="tel"
                   id="phone"
                   name="phone"
                   pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
                   required
+                  placeholder="xxx-xxx-xxxx"
                   className="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -77,10 +127,8 @@ export default function Signup() {
               </label>
               <div className="mt-2">
                 <input
-                  // id="email"
-                  // name="email"
-                  // type="email"
-                  // autoComplete="email"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
                   required
                   className="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
@@ -98,6 +146,8 @@ export default function Signup() {
               </div>
               <div className="mt-2">
                 <input
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   id="password"
                   name="password"
                   type="password"
@@ -109,13 +159,24 @@ export default function Signup() {
             </div>
 
             <div>
-              <button
-                type="submit"
-                className="flex w-full justify-center rounded-md bg-amber-200 px-3 py-1.5 text-sm font-semibold leading-6 text-black shadow-sm hover:bg-amber-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                onClick={() => router.push("/role")}
-              >
-                Sign up
-              </button>
+              {role === "USER" ? (
+                <button
+                  type="submit"
+                  className="flex w-full justify-center rounded-md bg-amber-200 px-3 py-1.5 text-sm font-semibold leading-6 text-black shadow-sm hover:bg-amber-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  onClick={handleSignup}
+                >
+                  Sign up
+                </button>
+              ) : (
+                // OWNER
+                <button
+                  type="submit"
+                  className="flex w-full justify-center rounded-md bg-amber-200 px-3 py-1.5 text-sm font-semibold leading-6 text-black shadow-sm hover:bg-amber-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  onClick={handleSignup}
+                >
+                  Next
+                </button>
+              )}
             </div>
           </form>
         </div>
