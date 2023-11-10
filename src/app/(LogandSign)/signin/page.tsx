@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function Signin() {
-  const router = useRouter(); 
+  const router = useRouter();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const handleSignIn = async () => {
@@ -18,21 +18,24 @@ export default function Signin() {
         body: JSON.stringify({ username, password }),
       });
 
-      if (response.ok) {  
+      if (response.ok) {
         const tokenData = await response.json();
-        console.log(tokenData)
+        console.log(tokenData);
         console.log("Successfully signed in!");
-        console.log("Token:", tokenData); 
-        router.push('/home');
+        console.log("Token:", tokenData);
+        localStorage.setItem("token", tokenData.token);
+        router.push("/home");
       } else {
         console.error("Failed to sign in");
-        alert("An error has occured. Please make sure your username and password are correct.")
-        window.location.reload()
+        alert(
+          "An error has occured. Please make sure your username and password are correct."
+        );
+        window.location.reload();
       }
     } catch (error) {
       console.error(error);
-      alert("An error has occured.")
-      window.location.reload()
+      alert("An error has occured.");
+      window.location.reload();
     }
   };
   // const router = useRouter()
