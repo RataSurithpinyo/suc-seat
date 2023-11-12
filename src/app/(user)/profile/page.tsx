@@ -35,6 +35,7 @@ export default function UserProfile() {
       console.log(response);
       console.log("update changes successfully");
       alert("Update changes successfully");
+      router.push('/home')
     } catch (error) {
       console.error(error);
       alert("Failed to save changes.");

@@ -24,10 +24,11 @@ export default function Signup() {
           },
           body: JSON.stringify({ username, password, name, surname, role, tel }),
         });
-
+        console.log("response", response)
+        console.log("response.ok", response.ok)
         if (response.ok) {
-          const result = await response.json();
-          console.log(result);
+          const result = await response //.json();
+          console.log("result", result);
           console.log('Successfully created a user!');
           if (role === 'USER') router.push('/home');
           else router.push('/createforadmin');
@@ -37,7 +38,7 @@ export default function Signup() {
         }
       } catch (error) {
         console.error(error);
-        alert('Failed to sign up.');
+        alert('Failed to sign up 1.');
       }
     } else {
       alert('Please fill in all required fields.');
