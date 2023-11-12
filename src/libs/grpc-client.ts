@@ -1,6 +1,8 @@
+import { deflate } from "zlib";
+
 const grpc = require("@grpc/grpc-js");
 const protoLoader = require("@grpc/proto-loader");
-const PROTO_PATH = "/Users/rata/Desktop/work/4th_year/SA/project/suc-seat/src/libs/service.proto"
+const PROTO_PATH = "src/libs/service.proto"
 var packageDefinition = protoLoader.loadSync(PROTO_PATH, {
   keepCase: true,
   longs: String,
@@ -19,7 +21,7 @@ export function uploadPlaceInfo(place: { id: string ; name: string; own:string ;
       // Make the gRPC call
       var call = client.uploadPlaceInfo(
         place, function(err: any, response: any) {
-        console.log('response:', response);
+        //console.log('response:', response);
       });
 
     } catch (err) {
@@ -41,7 +43,7 @@ export function uploadPlaceInfo(place: { id: string ; name: string; own:string ;
       console.error('Error:', err);
     }
   }
-  export function getPlaceInfo(PlaceName: {name : string}){
+  export function getPlaceInfo(PlaceName: {id : string}){
     console.log("Place Info to be uploaded:", PlaceName);
   
     try {
@@ -60,19 +62,33 @@ export function uploadPlaceInfo(place: { id: string ; name: string; own:string ;
       console.error('Error:', err);
     }
   }
-  export function searchPlaces(PlaceName: {name : string}){
+  export function searchPlaces(PlaceName: { name: string }) {
     console.log("Place Info to be uploaded:", PlaceName);
   
-    try {
-      // Make the gRPC call
-   
-      var call = client.searchPlaces(
-        PlaceName, function(err: any, response: any) {
-        console.log('response:', response);
-      });
-    } catch (err) {
-      console.error('Error:', err);
-    }
+    return new Promise<any>((resolve, reject) => {
+      try {
+        // Make the gRPC call
+        var call = client.searchPlaces(
+          PlaceName,
+          function callback(
+            err: any,
+            response: any
+          ) {
+            if (err) {
+              console.error("Error:", err);
+              reject(err);
+            } else {
+              // Log the response if needed
+              console.log("response:", response);
+              resolve(response);
+            }
+          }
+        );
+      } catch (err) {
+        console.error("Error:", err);
+        reject(err);
+      }
+    });
   }
   export function filterPlaces(Filter: {minCapacity? : number; facilities:string[]}){
     console.log("Place Info to be uploaded:", Filter);
@@ -94,6 +110,7 @@ export function uploadPlaceInfo(place: { id: string ; name: string; own:string ;
    
       var call = client.removePlaces(
         PlaceName, function(err: any, response: any) {
+
         console.log('response:', response);
         //fill to make an action
       });
