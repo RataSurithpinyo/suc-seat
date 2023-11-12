@@ -24,7 +24,23 @@ export default function Signin() {
         console.log("Successfully signed in!");
         console.log("Token:", tokenData);
         localStorage.setItem("token", tokenData.token);
-        router.push("/home");
+        const roleResponse = await fetch(`${url}/verifyuserdetail`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${tokenData.token}`,
+          },
+        });
+        if (roleResponse.ok) {
+          const roleResult = await roleResponse.json();
+          if (roleResult.role === 'OWNER') router.push('/ownerhome')
+          else router.push('/home') // Just a normal user
+          // console.log("roleResult", roleResult);
+        } else {
+          console.log(roleResponse); // error
+          alert("An error has occured.")
+        }
+        // router.push("/home");
       } else {
         console.error("Failed to sign in");
         alert(
