@@ -12,6 +12,19 @@ var packageObject = grpc.loadPackageDefinition(packageDefinition);
 var clientService = packageObject.places.PlaceService;
 const client = new clientService("localhost:9000", grpc.credentials.createInsecure());
 
+// interface 
+interface PlaceListInterface {
+  place: {
+    facilities: string[];
+    id: string;
+    name: string;
+    owner?: string | undefined;
+    capacity?: number | undefined;
+    availableSeat?: number | undefined;
+  }[];
+}
+
+
 // import { filterPlaces, getPlaceInfo, removePlaces, updatePlace, uploadPlaceInfo } from "@/libs/grpc-client";
 export function uploadPlaceInfo(place: { id: string ; name: string; own:string ; capacity: number; availableSeat:number; facilities:string[];}){
     console.log("Place Info to be uploaded:", place);
@@ -64,14 +77,14 @@ export function uploadPlaceInfo(place: { id: string ; name: string; own:string ;
   export function searchPlaces(PlaceName: { name: string }) {
     console.log("Place Info to be uploaded:", PlaceName);
   
-    return new Promise<any>((resolve, reject) => {
+    return new Promise<PlaceListInterface>((resolve, reject) => {
       try {
         // Make the gRPC call
         var call = client.searchPlaces(
           PlaceName,
           function callback(
             err: any,
-            response: any
+            response: PlaceListInterface
           ) {
             if (err) {
               console.error("Error:", err);

@@ -4,16 +4,23 @@ import Link from 'next/link'
 import React from 'react';
 
 export default async function Page() {
-    interface SearchResult {
-      place: Array<object>;
+    interface PlaceListInterface {
+      place: {
+        facilities: string[];
+        id: string;
+        name: string;
+        owner?: string | undefined;
+        capacity?: number | undefined;
+        availableSeat?: number | undefined;
+      }[];
     }
-    const test:SearchResult = await searchPlaces({ name: "" });
+    const placeListInfo:PlaceListInterface = await searchPlaces({ name: "" });
     // console.log("hi: ", test.place)
-  const mockdata = [
-    {id:"1", name:"starback", seat:"15", facilities:["chair","table"]},
-    {id:"2", name:"skZ cafe", seat:"5", facilities:["macbook pro m2", "something", "someone", "somewhere"]},
-    {id:"3", name:"threeyarn leftcity", seat:"18.25", facilities:["mostsandwich","Tity's noodle"]}
-  ]
+  // const mockdata = [
+  //   {id:"1", name:"starback", seat:"15", facilities:["chair","table"]},
+  //   {id:"2", name:"skZ cafe", seat:"5", facilities:["macbook pro m2", "something", "someone", "somewhere"]},
+  //   {id:"3", name:"threeyarn leftcity", seat:"18.25", facilities:["mostsandwich","Tity's noodle"]}
+  // ]
   // console.log(mockdata)
   return (
     <div className='flex flex-col justify-center'>
@@ -40,7 +47,7 @@ export default async function Page() {
               </thead>
               <tbody>
                 {
-                test.place.map((Item) => (
+                placeListInfo.place.map((Item) => (
                   
                   <tr key={Item.id}>
                   <td className="py-3 px-5 border-b border-blue-gray-50">
