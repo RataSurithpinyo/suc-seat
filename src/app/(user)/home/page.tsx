@@ -1,42 +1,20 @@
-
 import SearchBox from '@/components/SearchBox'
 import { searchPlaces } from '@/libs/grpc-client'
 import Link from 'next/link'
+import React from 'react';
 
-import React, { useEffect, useState } from 'react';
-
-export default function Page() {
-//export default async function Page() {
-  const [placeInfo, setPlaceInfo] = useState([]);
-//----------------------------
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const data = await searchPlaces({ name: "e" });
-  //       setPlaceInfo(data);
-  //     } catch (error) {
-  //       console.error('Error fetching data:', error);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, []);
-//----------------------------
-//   var placeInfo :{
-//     facilities: string[],
-//     id: string,
-//     name: string,
-//     owner?: string, // Optional property
-//     capacity?: number, // Optional property
-//     availableSeat?: number // Optional property
-// }[] = await searchPlaces({ name: "e" })
-
-  console.log(Array.isArray(placeInfo))
+export default async function Page() {
+    interface SearchResult {
+      place: Array<object>;
+    }
+    const test:SearchResult = await searchPlaces({ name: "" });
+    // console.log("hi: ", test.place)
   const mockdata = [
     {id:"1", name:"starback", seat:"15", facilities:["chair","table"]},
     {id:"2", name:"skZ cafe", seat:"5", facilities:["macbook pro m2", "something", "someone", "somewhere"]},
     {id:"3", name:"threeyarn leftcity", seat:"18.25", facilities:["mostsandwich","Tity's noodle"]}
   ]
+  // console.log(mockdata)
   return (
     <div className='flex flex-col justify-center'>
       <SearchBox/>
@@ -62,7 +40,7 @@ export default function Page() {
               </thead>
               <tbody>
                 {
-                mockdata.map((Item) => (
+                test.place.map((Item) => (
                   
                   <tr key={Item.id}>
                   <td className="py-3 px-5 border-b border-blue-gray-50">

@@ -1,6 +1,5 @@
 import { deflate } from "zlib";
-
-const grpc = require("@grpc/grpc-js");
+const grpc = require('@grpc/grpc-js')
 const protoLoader = require("@grpc/proto-loader");
 const PROTO_PATH = "src/libs/service.proto"
 var packageDefinition = protoLoader.loadSync(PROTO_PATH, {
