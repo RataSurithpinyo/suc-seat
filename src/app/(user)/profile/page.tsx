@@ -12,7 +12,7 @@ export default function UserProfile() {
   const router = useRouter();
   const handleUpdateProfile = async (event: any) => {
     event.preventDefault();
-    const url = "http://localhost:8080";
+    const url = "http://localhost:8081";
     try {
       const requestData: any = { password, name, surname, tel };
       // Filter out the empty string fields

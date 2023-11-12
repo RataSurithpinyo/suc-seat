@@ -15,7 +15,7 @@ export default function Signup() {
   const handleSignup = async () => {
     if (name && surname && tel && username && password) {
       // Proceed with the POST request only if all required fields are filled
-      const url = 'http://localhost:8080'; // Replace with your actual backend URL
+      const url = 'http://localhost:8081'; // Replace with your actual backend URL
       try {
         const response = await fetch(`${url}/register`, {
           method: 'POST',
