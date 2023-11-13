@@ -1,7 +1,25 @@
-'use client'
-import React, { useState,useEffect } from 'react';
+'use client';
+import { useRouter,useParams, useSearchParams } from 'next/navigation';
+import React, { useState } from 'react';
 
-export default function page({params}: {params: {pid: string}}) {
+export default function Page() {
+  const searchParams = useSearchParams()
+  interface PlaceInterface  {
+    facilities: string[];
+    id: string;
+    name: string;
+    owner: string ;
+    capacity: number ;
+    availableSeat: number ;
+  }
+  const name = searchParams.get('name')
+  const facilitiesParam = searchParams.get('facilities');
+  const facilities = facilitiesParam ? facilitiesParam.split(',') : [];
+  const availableSeats = searchParams.get('availableSeats');
+  const capacity = searchParams.get('capacity');
+
+
+console.log("router",facilities)
 
     const [isModalOpen, setModalOpen] = useState(false);
     const [isReserve, setReserve] = useState(false);
@@ -19,7 +37,7 @@ export default function page({params}: {params: {pid: string}}) {
         }
         
     }
-    const index = Number(params.pid) - 1
+    //const index = Number(params.pid) - 1
     const mockdata = [
         {pid:"1", name:"starback", seat:"15", facility:["chair","table"], capacity:"50"},
         {pid:"2", name:"sky cafe", seat:"5", facility:["macbook pro m2", "something", "someone", "somewhere"], capacity:"1"},
@@ -92,12 +110,12 @@ export default function page({params}: {params: {pid: string}}) {
             </div>
         </div>  
             <div className="mt-20 text-center border-b pb-12">    
-                <h1 className="text-4xl font-medium text-gray-700">{mockdata[index].name}</h1>
+                <h1 className="text-4xl font-medium text-gray-700">{name}</h1>
                 <p className="font-light text-gray-600 mt-3">reservable</p>    
-                <p className="mt-8 text-gray-950">Avaliable seat: {mockdata[index].seat} / {mockdata[index].capacity}
+                <p className="mt-8 text-gray-950">Avaliable seat: {availableSeats} / {capacity}
                 </p>    
                 <p className="mt-2 font-semibold text-gray-950">Facilities</p>
-                {mockdata[index].facility.map((item) => (
+                {facilities.map((item) => (
                     <span className="inline-flex items-center rounded-full bg-sky-900 p-3 text-md font-medium text-gray-50 ring-1 ring-inset ring-gray-500/10 ml-2 mt-3">{item}</span>
                 ))}
             </div>  
