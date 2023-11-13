@@ -17,6 +17,7 @@ export default async function Page() {
       }[];
     }
     const placeListInfo:PlaceListInterface = await searchPlaces({ name: "" });
+    console.log(placeListInfo.place)
     // console.log("hi: ", test.place)
   // const mockdata = [
   //   {id:"1", name:"starback", seat:"15", facilities:["chair","table"]},
@@ -26,7 +27,7 @@ export default async function Page() {
   // console.log(mockdata)
   return (
     <div className='flex flex-col justify-center'>
-      <SearchBox/>
+      <SearchBox Facilities={placeListInfo} />
       <div className="mb-4 grid grid-cols-1 gap-6 xl:grid-cols-2 self-center w-4/5">
         <div className="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md overflow-hidden xl:col-span-2">
           <div className="p-6 px-0 pt-0 pb-2">
