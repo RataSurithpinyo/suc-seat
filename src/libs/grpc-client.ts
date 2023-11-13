@@ -18,10 +18,24 @@ interface PlaceListInterface {
     facilities: string[];
     id: string;
     name: string;
-    owner?: string | undefined;
-    capacity?: number | undefined;
-    availableSeat?: number | undefined;
+    owner: string ;
+    capacity: number ;
+    availableSeat: number;
   }[];
+}
+interface PlaceNameInterface {
+  name:string;
+}
+interface PlaceIdInterface {
+  id:string;
+}
+interface PlaceInterface  {
+  facilities: string[];
+  id: string;
+  name: string;
+  owner: string ;
+  capacity: number ;
+  availableSeat: number ;
 }
 
 
@@ -55,27 +69,49 @@ export function uploadPlaceInfo(place: { id: string ; name: string; own:string ;
       console.error('Error:', err);
     }
   }
-  export function getPlaceInfo(PlaceName: {id : string}){
-    console.log("Place Info to be uploaded:", PlaceName);
+  export function getPlaceInfo(PlaceId: PlaceIdInterface){
+    console.log("Place Info to be geted:", PlaceId);
   
-    try {
-      // Make the gRPC call
+    // try {
+    //   // Make the gRPC call
    
-      var call = client.getPlaceInfo(
-        PlaceName, function(err: any, response: any) {
-        console.log('response:', response);
-      });
+    //   var call = client.getPlaceInfo(
+    //     PlaceName, function(err: any, response: any) {
+    //     console.log('response:', response);
+    //   });
 
       // getPlaceInfo({
       //   name : "abc"
       // })
 
-    } catch (err) {
-      console.error('Error:', err);
+      return new Promise<PlaceInterface>((resolve, reject) => {
+        try {
+          // Make the gRPC call
+          var call = client.getPlaceInfo(
+            PlaceId,
+            function callback(
+              err: any,
+              response: PlaceInterface
+            ) {
+              if (err) {
+                console.error("Error:", err);
+                reject(err);
+              } else {
+                // Log the response if needed
+                console.log("response:", response);
+                resolve(response);
+              }
+            }
+          );
+        } catch (err) {
+          console.error("Error:", err);
+          reject(err);
+        }
+      });
     }
-  }
-  export function searchPlaces(PlaceName: { name: string }) {
-    console.log("Place Info to be uploaded:", PlaceName);
+
+  export function searchPlaces(PlaceName: PlaceNameInterface) {
+    console.log("Place Info to be searched:", PlaceName);
   
     return new Promise<PlaceListInterface>((resolve, reject) => {
       try {

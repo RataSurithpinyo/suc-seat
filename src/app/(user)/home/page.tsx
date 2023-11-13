@@ -1,17 +1,19 @@
+
 import SearchBox from '@/components/SearchBox'
 import { searchPlaces } from '@/libs/grpc-client'
 import Link from 'next/link'
 import React from 'react';
 
 export default async function Page() {
+
     interface PlaceListInterface {
       place: {
         facilities: string[];
         id: string;
         name: string;
-        owner?: string | undefined;
-        capacity?: number | undefined;
-        availableSeat?: number | undefined;
+        owner: string ;
+        capacity: number ;
+        availableSeat: number ;
       }[];
     }
     const placeListInfo:PlaceListInterface = await searchPlaces({ name: "" });
@@ -66,8 +68,13 @@ export default async function Page() {
                     </div>
                   </td>
                   <td className="py-3 px-5 border-b border-blue-gray-50">
-                    <Link href={`/home/${Item.id}`} key={Item.id}>
-                  <button className="bg-transparent hover:bg-gray-600 text-gray-600 font-medium hover:text-white py-2 px-4 border border-gray-950 hover:border-transparent rounded">
+                    {/* <Link href={`/home/${Item.id}`} key={Item.id}> */}
+                    <Link href={`/home/${Item.id}?name=${Item.name}&availableSeat=${Item.availableSeat}&facilities=${Item.facilities}&capacity=${Item.capacity}`} key={Item.id} >
+                  <button className="bg-transparent hover:bg-gray-600 text-gray-600 font-medium hover:text-white py-2 px-4 border border-gray-950 hover:border-transparent rounded"
+                  // onClick={() => {
+                  //   router.push()
+                  // }}
+                >
                     detail
                   </button>
                     </Link>
