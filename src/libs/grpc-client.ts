@@ -37,17 +37,28 @@ interface PlaceInterface  {
   capacity: number ;
   availableSeat: number ;
 }
+interface UpdatePlaceInterface{ 
+  targetName: 
+  string; newInfo:
+  { 
+    id: string ;
+     name: string; 
+     owner:string ; 
+     capacity: number; 
+     facilities:string[];
+    } 
+  }
 
 
 // import { filterPlaces, getPlaceInfo, removePlaces, updatePlace, uploadPlaceInfo } from "@/libs/grpc-client";
-export function uploadPlaceInfo(place: { id: string ; name: string; own:string ; capacity: number; availableSeat:number; facilities:string[];}){
+export function uploadPlaceInfo(place:PlaceInterface){
     console.log("Place Info to be uploaded:", place);
   
     try {
       // Make the gRPC call
       var call = client.uploadPlaceInfo(
-        place, function(err: any, response: any) {
-        //console.log('response:', response);
+        place, function(err: any, response: PlaceInterface) {
+        console.log('response:', response);
       });
 
     } catch (err) {
@@ -55,14 +66,14 @@ export function uploadPlaceInfo(place: { id: string ; name: string; own:string ;
     }
   }
 
-  export function updatePlace(UpdatePlace: { targetName: string; newInfo:{ id: string ; name: string; owner:string ; capacity: number; facilities:string[];} }){
-    console.log("Place Info to be uploaded:", UpdatePlace);
+  export function updatePlace(UpdatePlace: UpdatePlaceInterface){
+    console.log("Place Info to be updated:", UpdatePlace);
   
     try {
       // Make the gRPC call
    
       var call = client.uploadPlaceInfo(
-        UpdatePlace, function(err: any, response: any) {
+        UpdatePlace, function(err: any, response: UpdatePlaceInterface) {
         console.log('response:', response);
       });
     } catch (err) {
@@ -71,19 +82,6 @@ export function uploadPlaceInfo(place: { id: string ; name: string; own:string ;
   }
   export function getPlaceInfo(PlaceId: PlaceIdInterface){
     console.log("Place Info to be geted:", PlaceId);
-  
-    // try {
-    //   // Make the gRPC call
-   
-    //   var call = client.getPlaceInfo(
-    //     PlaceName, function(err: any, response: any) {
-    //     console.log('response:', response);
-    //   });
-
-      // getPlaceInfo({
-      //   name : "abc"
-      // })
-
       return new Promise<PlaceInterface>((resolve, reject) => {
         try {
           // Make the gRPC call
@@ -139,10 +137,10 @@ export function uploadPlaceInfo(place: { id: string ; name: string; own:string ;
     });
   }
   export function filterPlaces(Filter: {minCapacity? : number; facilities:string[]}){
-    console.log("Place Info to be uploaded:", Filter);
+    console.log("Place Info to be filtered:", Filter);
     try {
       var call = client.filterPlaces(
-        Filter, function( err: any , response: any ) {
+        Filter, function( err: any , response: PlaceListInterface ) {
           console.log(response)
       });
       
@@ -150,29 +148,16 @@ export function uploadPlaceInfo(place: { id: string ; name: string; own:string ;
       console.error('Error:', err);
     }
   }
-  export function removePlaces(PlaceName:{name : string}){
-    console.log("Place Info to be uploaded:", PlaceName);
+  export function removePlaces(PlaceName:PlaceNameInterface){
+    console.log("Place Info to be removed:", PlaceName);
   
     try {
       // Make the gRPC call
    
       var call = client.removePlaces(
         PlaceName, function(err: any, response: any) {
-
         console.log('response:', response);
-        //fill to make an action
       });
-
-      //how to called
-
-      // filterPlaces({
-      //   facilities : ["toilet"]
-      // })
-
-      // filterPlaces({
-      //   minCapacity:1,
-      //   facilities : ["toilet"]
-      // })
 
     } catch (err) {
       console.error('Error:', err);
