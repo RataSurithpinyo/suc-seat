@@ -58,7 +58,7 @@ export default async function Page() {
                     </div>
                   </td>
                   <td className="py-3 px-5 border-b border-blue-gray-50">
-                    <p className="pl-2 block antialiased font-sans text-md font-medium text-blue-gray-600">{Item.facilities}</p>
+                    <p className="pl-2 block antialiased font-sans text-md font-medium text-blue-gray-600">{Item.availableSeat}</p>
                   </td>
                   <td className="py-3 px-5 border-b border-blue-gray-50">
                     <div className="w-10/12">
