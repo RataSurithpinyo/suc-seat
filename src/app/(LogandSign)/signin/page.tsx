@@ -5,40 +5,45 @@ import { useState } from "react";
 
 export default function Signin() {
   const router = useRouter();
+  const axios = require("axios");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const handleSignIn = async () => {
     const url = "http://localhost:8081"; // Replace with your actual backend URL
     try {
-      const response = await fetch(`${url}/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ username, password }),
-      });
-
-      if (response.ok) {
-        const tokenData = await response.json();
+      const response = await axios.post(
+        `${url}/login`,
+        { username, password },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log(response);
+      console.log(response.data);
+      if (response.status === 200) {
+        const tokenData = await response.data.token;
         console.log(tokenData);
         console.log("Successfully signed in!");
         console.log("Token:", tokenData);
-        localStorage.setItem("token", tokenData.token);
-        const roleResponse = await fetch(`${url}/verifyuserdetail`, {
-          method: "GET",
+        localStorage.setItem("token", tokenData);
+
+        const roleResponse = await axios.get(`${url}/verifyuserdetail`, {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${tokenData.token}`,
+            Authorization: `Bearer ${tokenData}`,
           },
         });
-        if (roleResponse.ok) {
-          const roleResult = await roleResponse.json();
-          if (roleResult.role === 'OWNER') router.push('/ownerhome')
-          else router.push('/home') // Just a normal user
+        if (roleResponse.status === 200) {
+          const roleResult = await roleResponse.data;
+          // console.log("roleResult", roleResult)
+          if (roleResult.role === "OWNER") router.push("/ownerhome");
+          else router.push("/home"); // Just a normal user
           // console.log("roleResult", roleResult);
         } else {
           console.log(roleResponse); // error
-          alert("An error has occured.")
+          alert("An error has occured.");
         }
         // router.push("/home");
       } else {

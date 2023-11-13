@@ -4,6 +4,7 @@ import { useState } from "react";
 
 export default function Signup() {
   const router = useRouter();
+  const axios = require("axios");
   const searchParams = useSearchParams();
   const role = searchParams.get("role");
   const [username, setUsername] = useState("");
@@ -15,33 +16,34 @@ export default function Signup() {
   const handleSignup = async () => {
     if (name && surname && tel && username && password) {
       // Proceed with the POST request only if all required fields are filled
-      const url = 'http://localhost:8081'; // Replace with your actual backend URL
+      const url = "http://localhost:8081"; // Replace with your actual backend URL
       try {
-        const response = await fetch(`${url}/register`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ username, password, name, surname, role, tel }),
-        });
-        console.log("response", response)
-        console.log("response.ok", response.ok)
-        if (response.ok) {
-          const result = await response //.json();
+        const response = await axios.post(
+          `${url}/register`,
+          { username, password, name, surname, role, tel },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        console.log("response", response);
+        if (response.status === 201 || response.status === 200) {
+          const result = await response; //.json();
           console.log("result", result);
-          console.log('Successfully created a user!');
-          if (role === 'USER') router.push('/home');
-          else router.push('/createforadmin');
+          console.log("Successfully created a user!");
+          if (role === "USER") router.push("/signin");
+          else router.push("/createforadmin");
         } else {
-          console.error('Failed to sign up');
-          alert('Failed to sign up.');
+          console.error("Failed to sign up");
+          alert("Failed to sign up.");
         }
       } catch (error) {
         console.error(error);
-        alert('Failed to sign up 1.');
+        alert("Failed to sign up 1.");
       }
     } else {
-      alert('Please fill in all required fields.');
+      alert("Please fill in all required fields.");
     }
   };
 
@@ -66,7 +68,7 @@ export default function Signup() {
                 </label>
                 <div className="mt-2">
                   <input
-                  required
+                    required
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     type="text"
@@ -87,7 +89,7 @@ export default function Signup() {
                 </label>
                 <div className="mt-2">
                   <input
-                  required
+                    required
                     value={surname}
                     onChange={(e) => setSurname(e.target.value)}
                     type="text"

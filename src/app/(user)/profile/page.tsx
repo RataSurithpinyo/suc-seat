@@ -5,6 +5,7 @@ import { useState } from "react";
 
 export default function UserProfile() {
   let userDetail: any;
+  const axios = require("axios");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
@@ -24,18 +25,24 @@ export default function UserProfile() {
         }, {});
       console.log("filteredData", filteredData);
       const token = localStorage.getItem("token");
-      const response = await fetch(`${url}/updateuserdetail`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(filteredData),
-      });
-      console.log(response);
-      console.log("update changes successfully");
-      alert("Update changes successfully");
-      router.push('/home')
+      const response = await axios.put(
+        `${url}/updateuserdetail`,
+        filteredData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (response.status === 201 || response.status === 200) {
+        console.log(response);
+        console.log("update changes successfully");
+        alert("Update changes successfully");
+        router.push("/home");
+      } else {
+        alert("Failed to save changes.");
+      }
     } catch (error) {
       console.error(error);
       alert("Failed to save changes.");
