@@ -70,7 +70,7 @@ export default async function Page() {
                   </td>
                   <td className="py-3 px-5 border-b border-blue-gray-50">
                     {/* <Link href={`/home/${Item.id}`} key={Item.id}> */}
-                    <Link href={`/home/${Item.id}?name=${Item.name}&availableSeat=${Item.availableSeat}&facilities=${Item.facilities}&capacity=${Item.capacity}`} key={Item.id} >
+                    <Link href={`/home/${Item.id}?name=${Item.name}&availableSeat=${Item.availableSeat}&facilities=${Item.facilities}&capacity=${Item.capacity}&owner=${Item.owner}`} key={Item.id} >
                   <button className="bg-transparent hover:bg-gray-600 text-gray-600 font-medium hover:text-white py-2 px-4 border border-gray-950 hover:border-transparent rounded"
                   // onClick={() => {
                   //   router.push()
