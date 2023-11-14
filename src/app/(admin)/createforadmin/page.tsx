@@ -1,26 +1,58 @@
 "use client";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 export default function CreateForAdmin() {
-  const handleSubmit = () => {
-    console.log("---------------");
-    console.log(name);
-    console.log(capacity);
-    console.log(facilities);
-    console.log(currentUser);
-    console.log(reservable);
-
-    console.log("submitted!");
-  };
-
-  // const router = useRouter();
-  // const axios = require("axios");
+  const router = useRouter();
+  const axios = require("axios");
+  const searchParams = useSearchParams();
+  const username = searchParams.get("name");
   const [name, setName] = useState(String);
   const [capacity, setCapacity] = useState(Number);
   const [facilityInput, setFacilityInput] = useState(String);
   const [facilities, setFacilities] = useState<string[]>([]);
-  const [currentUser, setCurrentUser] = useState(Number);
+  const [availableseat, setAvailableseat] = useState(Number); // to available seats
   const [reservable, setReservable] = useState(Boolean);
+  const handleSubmit = async () => {
+  //   //console.log("token from sign up:", localStorage.getItem('token'))
+     const url = "http://localhost:8080";
+    try {
+      console.log("token from sign up:", localStorage.getItem('token'))
+      const token = localStorage.getItem('token')
+      console.log("token", token)
+      const response = await axios.post(
+        `${url}/upload`,
+        {
+          Name: name,
+          Owner: username,
+          Capacity: capacity,
+          AvailableSeat: availableseat,
+          Facilities: facilities
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+      alert(response);
+      console.log(response.data);
+      if (response.status === 200 || response.status === 201) {
+        console.log("created place successfully");
+      } else {
+        console.error("Failed to sign in");
+        alert(
+          "An error has occurred. Please make sure your username and password are correct."
+        );
+        //window.location.reload();
+      }
+    } catch (error) {
+      console.error(error);
+      alert("An error has occurred.");
+      // window.location.reload();
+    }
+  };
+  
 
   const handleReservableChange = (e: any) => {
     const value = e.target.value === "true"; // Convert string value to boolean
@@ -100,7 +132,7 @@ export default function CreateForAdmin() {
                 htmlFor="currentuser"
                 className="block text-sm font-medium leading-6 text-white"
               >
-                Current Users
+                Available Seats
               </label>
               <div className="mt-2">
                 <input
@@ -109,8 +141,8 @@ export default function CreateForAdmin() {
                   id="currentuser"
                   name="currentuser"
                   placeholder="Enter a number"
-                  value={currentUser}
-                  onChange={(e) => setCurrentUser(parseInt(e.target.value))}
+                  value={availableseat}
+                  onChange={(e) => setAvailableseat(parseInt(e.target.value))}
                   className="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>

@@ -30,10 +30,15 @@ export default function Signup() {
         console.log("response", response);
         if (response.status === 201 || response.status === 200) {
           const result = await response; //.json();
+          const tokenData = await response.data.token;
+          console.log(tokenData);
+          console.log("Successfully signed in!");
+          console.log("Token:", tokenData);
+          localStorage.setItem("token", tokenData);
           console.log("result", result);
           console.log("Successfully created a user!");
           if (role === "USER") router.push("/signin");
-          else router.push("/createforadmin");
+          else router.push(`/createforadmin?name=${name}`);
         } else {
           console.error("Failed to sign up");
           alert("Failed to sign up.");
