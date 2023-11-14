@@ -6,6 +6,7 @@ export default function CreateForAdmin() {
   const axios = require("axios");
   const searchParams = useSearchParams();
   const username = searchParams.get("name");
+  const token = localStorage.getItem("token"); // searchParams.get("token");
   const [name, setName] = useState(String);
   const [capacity, setCapacity] = useState(Number);
   const [facilityInput, setFacilityInput] = useState(String);
@@ -13,12 +14,9 @@ export default function CreateForAdmin() {
   const [availableseat, setAvailableseat] = useState(Number); // to available seats
   const [reservable, setReservable] = useState(Boolean);
   const handleSubmit = async () => {
-  //   //console.log("token from sign up:", localStorage.getItem('token'))
-     const url = "http://localhost:8080";
+    const url = "http://localhost:8080";
     try {
-      console.log("token from sign up:", localStorage.getItem('token'))
-      const token = localStorage.getItem('token')
-      console.log("token", token)
+      console.log("token", token);
       const response = await axios.post(
         `${url}/upload`,
         {
@@ -26,33 +24,33 @@ export default function CreateForAdmin() {
           Owner: username,
           Capacity: capacity,
           AvailableSeat: availableseat,
-          Facilities: facilities
+          Facilities: facilities,
         },
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`
-          }
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
       alert(response);
       console.log(response.data);
       if (response.status === 200 || response.status === 201) {
-        console.log("created place successfully");
+        alert("created place successfully");
+        router.push("/ownerhome");
       } else {
         console.error("Failed to sign in");
         alert(
           "An error has occurred. Please make sure your username and password are correct."
         );
-        //window.location.reload();
+        window.location.reload();
       }
     } catch (error) {
       console.error(error);
       alert("An error has occurred.");
-      // window.location.reload();
+      window.location.reload();
     }
   };
-  
 
   const handleReservableChange = (e: any) => {
     const value = e.target.value === "true"; // Convert string value to boolean

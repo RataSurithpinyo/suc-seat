@@ -38,7 +38,7 @@ export default function Signup() {
           console.log("result", result);
           console.log("Successfully created a user!");
           if (role === "USER") router.push("/signin");
-          else router.push(`/createforadmin?name=${name}`);
+          else router.push(`/createforadmin?name=${name}&token=${tokenData}`);
         } else {
           console.error("Failed to sign up");
           alert("Failed to sign up.");
