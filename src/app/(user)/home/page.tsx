@@ -53,11 +53,6 @@ const uniqueFacilities: Set<string> = placeListInfo.place.reduce((acc, place) =>
 const [choiceList, setChoicelist] = useState(Array<string>);
 
 //---------
-  
-
-
-
-
       async function handleSearch() {
         const response = await axios.post(
           `${url}/search`,
@@ -86,7 +81,6 @@ const [choiceList, setChoicelist] = useState(Array<string>);
         console.log("mapped",placeListInfo);
       }
 
-
       async function handlefilter() {
         const response = await axios.post(
           `${url}/filter`,
@@ -100,10 +94,8 @@ const [choiceList, setChoicelist] = useState(Array<string>);
             },
           }
         );
-        
         console.log("choiceList",choiceList)
         console.log("mappedfilter",response.data.place);
-  
       }
 
        useEffect(() => {
@@ -111,10 +103,6 @@ const [choiceList, setChoicelist] = useState(Array<string>);
         //handlefilter();
        }, []);
       
-
-   
-
-   
   return (
     <div className='flex flex-col justify-center'>
 
