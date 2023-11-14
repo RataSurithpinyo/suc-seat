@@ -96,13 +96,29 @@ const [choiceList, setChoicelist] = useState(Array<string>);
         );
         console.log("choiceList",choiceList)
         console.log("mappedfilter",response.data.place);
+        const mappedData: PlaceListInterface = {
+          place: response.data.place.map((item:PlaceInterface) => ({
+            id: item.id,
+            name: item.name,
+            owner: item.owner,
+            capacity: item.capacity,
+            availableSeat: item.availableSeat,
+            facilities: item.facilities,
+          })),
+        };
+        setPlaceListInfo(mappedData)
       }
 
        useEffect(() => {
         handleSearch();
-        //handlefilter();
+       
        }, []);
-      
+
+       useEffect(() => {
+        console.log("choiceList",choiceList)
+       handlefilter();
+       }, [choiceList]);
+       
   return (
     <div className='flex flex-col justify-center'>
 
