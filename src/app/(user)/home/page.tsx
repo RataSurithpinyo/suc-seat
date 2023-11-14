@@ -1,33 +1,77 @@
-
+"use client"
 import SearchBox from '@/components/SearchBox'
-import { searchPlaces } from '@/libs/grpc-client'
 import Link from 'next/link'
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+interface PlaceListInterface {
+  place: {
+    facilities: string[];
+    id: string;
+    name: string;
+    owner: string ;
+    capacity: number ;
+    availableSeat: number ;
+  }[];
+}
+interface PlaceInterface {
 
-export default async function Page() {
+    facilities: string[];
+    id: string;
+    name: string;
+    owner: string ;
+    capacity: number ;
+    availableSeat: number ;
 
-    interface PlaceListInterface {
-      place: {
-        facilities: string[];
-        id: string;
-        name: string;
-        owner: string ;
-        capacity: number ;
-        availableSeat: number ;
-      }[];
-    }
-    const placeListInfo:PlaceListInterface = await searchPlaces({ name: "" });
-    console.log(placeListInfo.place)
-    // console.log("hi: ", test.place)
-  // const mockdata = [
-  //   {id:"1", name:"starback", seat:"15", facilities:["chair","table"]},
-  //   {id:"2", name:"skZ cafe", seat:"5", facilities:["macbook pro m2", "something", "someone", "somewhere"]},
-  //   {id:"3", name:"threeyarn leftcity", seat:"18.25", facilities:["mostsandwich","Tity's noodle"]}
-  // ]
-  // console.log(mockdata)
+}
+export default function Page() {
+  const mockdata = 
+  {place: 
+    [
+      { id: "1", name: "starback", availableSeat: 15, facilities: ["chair", "table"], capacity: 50, owner: "a" },
+      { id: "2", name: "sky cafe", availableSeat: 5, facilities: ["macbook pro m2", "something", "someone", "somewhere"], capacity: 1, owner: "a" },
+      { id: "3", name: "threeyarn leftcity", availableSeat: 18.25, facilities: ["mostsandwich", "Tity's noodle"], capacity: 104, owner: "a" }
+    ]
+  }
+  const axios = require("axios");
+  const [placeListInfo, setPlaceListInfo] = useState(mockdata);
+  // const [searchInfo, setSeachInfo] = useState("");
+  // const [FacilityInfo, setFacilityInfo] = useState("");
+
+  const url = "http://localhost:8080"; 
+    useEffect(() => {
+      // put the fetchData inside the effect
+      async function fetchData() {
+        const response = await axios.get(
+          `${url}/search`,
+          {
+            data: { name: "newPlace3" },
+            headers: {
+              "Content-Type": "application/json",
+              // "Authorization": `Bearer ${localStorage.getItem('token')}`, // Uncomment if needed
+            },
+          }
+        );
+        console.log(response.data.place)
+        const mappedData: PlaceListInterface = {
+          place: response.data.place.map((item:PlaceInterface) => ({
+            id: item.id,
+            name: item.name,
+            owner: item.owner,
+            capacity: item.capacity,
+            availableSeat: item.availableSeat,
+            facilities: item.facilities,
+          })),
+        };
+        setPlaceListInfo(mappedData)
+      }
+      fetchData();
+    }, []);
+
+   
+
+   
   return (
     <div className='flex flex-col justify-center'>
-      <SearchBox Facilities={placeListInfo} />
+      <SearchBox Facilities={mockdata} />
       <div className="mb-4 grid grid-cols-1 gap-6 xl:grid-cols-2 self-center w-4/5">
         <div className="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md overflow-hidden xl:col-span-2">
           <div className="p-6 px-0 pt-0 pb-2">
@@ -50,7 +94,7 @@ export default async function Page() {
               </thead>
               <tbody>
                 {
-                placeListInfo.place.map((Item) => (
+                mockdata.place.map((Item) => (
                   
                   <tr key={Item.id}>
                   <td className="py-3 px-5 border-b border-blue-gray-50">
