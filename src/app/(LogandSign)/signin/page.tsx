@@ -6,6 +6,7 @@ import { useState } from "react";
 export default function Signin() {
   const router = useRouter();
   const axios = require("axios");
+  // const token = locaclStorage.getItem('item')
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const handleSignIn = async () => {
@@ -17,12 +18,14 @@ export default function Signin() {
         {
           headers: {
             "Content-Type": "application/json",
+            // Authorization: `Bearer ${token}`
           },
         }
       );
       console.log(response);
       console.log(response.data);
       if (response.status === 200) {
+        localStorage.setItem('username', username)
         const tokenData = await response.data.token;
         console.log(tokenData);
         console.log("Successfully signed in!");

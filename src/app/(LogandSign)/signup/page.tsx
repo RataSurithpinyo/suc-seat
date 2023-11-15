@@ -14,6 +14,7 @@ export default function Signup() {
   const [tel, setTel] = useState("");
   // console.log("Role:", role)
   const handleSignup = async () => {
+    localStorage.setItem('username', username)
     if (name && surname && tel && username && password) {
       // Proceed with the POST request only if all required fields are filled
       const url = "http://localhost:8081"; // Replace with your actual backend URL
@@ -38,7 +39,7 @@ export default function Signup() {
           console.log("result", result);
           console.log("Successfully created a user!");
           if (role === "USER") router.push("/signin");
-          else router.push(`/createforadmin?name=${name}&token=${tokenData}`);
+          else router.push(`/createforadmin?name=${name}`);
         } else {
           console.error("Failed to sign up");
           alert("Failed to sign up.");

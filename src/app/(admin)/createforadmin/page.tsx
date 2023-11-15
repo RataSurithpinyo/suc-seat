@@ -39,7 +39,7 @@ export default function CreateForAdmin() {
         alert("created place successfully");
         router.push("/ownerhome");
       } else {
-        console.error("Failed to sign in");
+        console.error("Failed to create a place");
         alert(
           "An error has occurred. Please make sure your username and password are correct."
         );
