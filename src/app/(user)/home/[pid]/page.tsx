@@ -92,7 +92,6 @@ console.log("router",facilities)
     <div>
         <div id="modal" className="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
   <div className={`fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity ${isModalOpen ? "visible" : "invisible"}`}></div>
-
 {/* -------------------------modal------------------------- */}
   
   <div id="modal" className={`fixed inset-0 z-10 w-screen overflow-y-auto ${isModalOpen ? "visible translate-y-0 sm:scale-100" : "invisible translate-y-4 sm:translate-y-0 sm:scale-95"}`}>
